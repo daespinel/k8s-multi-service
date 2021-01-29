@@ -1,0 +1,10 @@
+# Multi container setup
+Push code to github
+travis automatically pulls repo
+travis build a test image, tests code
+travis build a prod images
+travis pushes built prod images to docker hub
+travis pushes project to AWS EB
+EB pulls images from Docker Hub, deploys
+
+# Because we're using an nginx dedicated instance to reroute requests, for the react client we have another nginx instance
