@@ -8,3 +8,11 @@ travis pushes project to AWS EB
 EB pulls images from Docker Hub, deploys
 
 # Because we're using an nginx dedicated instance to reroute requests, for the react client we have another nginx instance
+
+# Travis setup
+Specify docker as a dependency
+build test version of react project
+Run tests
+Build prod versions of all projects
+Push all to docker hub
+tell elastic beanstalk to update

@@ -1,0 +1,10 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t dafespinelsa/multi-docker -f ./client/Dockerfile.dev ./client
+
+script:
+- docker run -e CI=true dafespinelsa/multi-docker npm run test
+
