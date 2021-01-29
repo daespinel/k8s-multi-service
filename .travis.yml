@@ -3,8 +3,20 @@ services:
   - docker
 
 before_install:
-  - docker build -t dafespinelsa/multi-docker -f ./client/Dockerfile.dev ./client
+  - docker build -t dafespinelsa/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-- docker run -e CI=true dafespinelsa/multi-docker npm run test
+  - docker run -e CI=true dafespinelsa/multi-docker npm run test
 
+after_success:
+  - docker build -t dafespinelsa/multi-client ./client
+  - docker build -t dafespinelsa/multi-nginx ./nginx
+  - docker build -t dafespinelsa/multi-server ./server
+  - docker build -t dafespinelsa/multi-worker ./worker
+# Log into docker CLI (env variables in travis CI)
+  - echo "$docker_password" | docker login -u "$docker_id" --password-stdin
+# Push the images to docker hub
+  - docker push dafespinelsa/multi-client
+  - docker push dafespinelsa/multi-nginx
+  - docker push dafespinelsa/multi-server
+  - docker push dafespinelsa/multi-worker
