@@ -1,4 +1,8 @@
-Travis yaml for GCP:
+# Kubectl create secret
+
+kubectl create secret generic <secret-name> --from-literal PGPASSWORD=password123
+
+#Travis yaml for GCP:
     - Install google cloud sdk cli
     - Configure the SDK with our GCP auth info -> need to generate a GCP service account json 
     - Login to Docker cli
