@@ -1,67 +1,16 @@
-# Multi container setup
-Push code to github
-travis automatically pulls repo
-travis build a test image, tests code
-travis build a prod images
-travis pushes built prod images to docker hub
-travis pushes project to AWS EB
-EB pulls images from Docker Hub, deploys
+Travis yaml for GCP:
+    - Install google cloud sdk cli
+    - Configure the SDK with our GCP auth info -> need to generate a GCP service account json 
+    - Login to Docker cli
+    - Build the 'test' version of multi-client
+    - Run tests
+    - If tests are successful, run a script to deploy newest images
+    - Build all our images, tag each one, push each to docker hub
+    - Apply all configs in the 'k8s' folder
+    - Imperatively set latest images on each deployment
 
-# Because we're using an nginx dedicated instance to reroute requests, for the react client we have another nginx instance
-
-# Travis setup
-Specify docker as a dependency
-build test version of react project
-Run tests
-Build prod versions of all projects
-Push all to docker hub
-tell elastic beanstalk to update
-
-# Elastic beanstalk requests Amazon Elastic container Service (ECS) using task definitions 
-# in the dockerrun.aws.json file we're adding container definitions
-
-# For a multi container deployment, we use multi-container docker running on 64bit Amazon Linux
-# For the postgres database:
-#   RDS PostgreSQL, DB instance identifier multi-docker-postgres
-#   Master username postgres and password postgres_password
-#   advanced configuration > set initial database name to fibvalues
-
-# For redis: 
-#   cluster mode not enabled, 
-#   name multi-docker-redis with node type cache.t2.micro 
-#   replicas per shard 0
-
-# Creating custom security groups
-#   set new security group name to multi docker
-#   set description to multi-docker
-#   Add a new inbound rule
-#       set port range to 5432-6379
-#       Add the rule to the freshly created security group
-
-# We need to enforce that this security group is being used by all the participant services (redis, postgres, and beanstalk)
-
-# Add AWS configuration details to .travis.yml
-#   set region
-#   set app name 'multi-docker' as the EBS application name
-#   set env to EBS environment name 'MultiDocker-env'
-#   set the bucket name
-#   set the bucket path to 'docker-multi'
-#   set access_key to $AWS_ACCESS_KEY
-#   set secret_access_key to $AWS_SECRET_KEY
-
-# Set EBS environment variables
-#   MultiDocker-env > configuration, in software edit >
-#   set REDIS_HOST to the primary redis endpoint without the port
-#   set REDIS_PORT to 6379
-#   set PGUSER to postgres
-#   PGPASSWORD to postgres_password
-#   set PGHOST to the endpoint of postgres
-#   set PGDATABASE to fibvalues
-#   set PGPORT to 5432
-
-# Set the AWS keys on travis
-
-
-
-
-
+# To create a service account:
+    - Download service account credentials in a json file
+    - Download and install the Travis cli
+    - Encrypt and upload the json file to our Travis account
+    - In travis.yml add code to unencrypt the json file and load it into GCP SDK
