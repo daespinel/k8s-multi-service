@@ -12,8 +12,8 @@ metadata:
 spec:
   tls:
     - hosts:
-      - despinel.net
-      - www.despinel.net
+        - despinel.net
+        - www.despinel.net
     secretName: despinel-net
   rules:
     - host: despinel.net
