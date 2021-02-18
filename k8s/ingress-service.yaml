@@ -14,7 +14,7 @@ spec:
     - hosts:
         - despinel.net
         - www.despinel.net
-    secretName: despinel-net
+      secretName: despinel-net
   rules:
     - host: despinel.net
       http:
