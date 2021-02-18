@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: despinel-net-tls
+spec:
+  secretName: despinel-net
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: despinel.net
+  dnsNames:
+    - despinel.net
+    - www.despinel.net
+  acme:
+    config:
+      - http01:
+          ingressClass: nginx
+        domains:
+          - despinel.net
+          - www.despinel.net

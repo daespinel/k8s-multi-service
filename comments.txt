@@ -18,3 +18,5 @@ kubectl create secret generic <secret-name> --from-literal PGPASSWORD=password12
     - Download and install the Travis cli
     - Encrypt and upload the json file to our Travis account
     - In travis.yml add code to unencrypt the json file and load it into GCP SDK
+
+# Setting up HTTPS requires a domain name to be able to provide the certificate
